@@ -9,5 +9,5 @@ class HWView(View):
 
     def get(self, request):
         """Returns a JSON Response saying "Hello World"""
-        return JsonResponse({"response": "Hellow World !"});
+        return JsonResponse({"response": "Hello World !"});
 

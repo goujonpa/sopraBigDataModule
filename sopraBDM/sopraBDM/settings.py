@@ -29,8 +29,8 @@ ALLOWED_HOSTS = []
 
 # HOST and PORT parameters
 # Used within the API to know where to target
-HOST = "localhost"
-PORT = 8000
+HOST = "127.0.0.1"
+PORT = "8000"
 
 
 # Application definition

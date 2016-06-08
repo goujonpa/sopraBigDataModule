@@ -1,6 +1,9 @@
 # ignore virtualenv
 venv/*
 
+# ignore vim swp file (.swp)
+*.swp
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
