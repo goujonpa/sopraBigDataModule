@@ -1,3 +1,9 @@
+# ignore hidden
+.*
+
+# ignore datasets
+dataset*
+
 # ignore virtualenv
 venv/*
 
