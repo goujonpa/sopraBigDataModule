@@ -1,8 +1,10 @@
 from django.shortcuts import render
 from django.views.generic import View
 from django.http import JsonResponse
+from django.core import serializers
 
 import json
+import subprocess
 from API.models import Employee, Widget, Notation
 
 class HWView(View):
@@ -45,6 +47,7 @@ class InitDBView(View):
 
         return r
 
+
 class EmployeePredictView(View):
     """Returns a prediction for an employee"""
 
@@ -54,11 +57,16 @@ class EmployeePredictView(View):
             post_data = json.loads(request.body)
             employee_id = post_data['id']
             max_length = post_data['max_length']
-            notations = Notation.objects.filter(employee__id=employee_id).values()
-            prediction = "bjr"
+            notations = serializers.serialize("json", Notation.objects.filter(employee__id=employee_id))
+            notations = json.loads(notations)
+            l = list()
+            for instance in notations:
+                l.append([instance['fields']['employee'], instance['fields']['widget'], instance['fields']['rating']])
+            with open("./RLib/employee_predict_in.json", "write") as f:
+                f.write(json.dumps(l))
+
             r = JsonResponse({
                 "status": "OK",
-                "employee": str(notations)
             })
         except Exception as e:
             r = JsonResponse({

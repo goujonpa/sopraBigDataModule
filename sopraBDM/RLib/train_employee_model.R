@@ -9,13 +9,19 @@ library(rjson)
 # Data                     #
 ############################ 
 # Generating matrix
-data <- matrix(sample(c(as.numeric(0:5), NA), 50,
-            replace=TRUE, prob=c(rep(.4/6,6),.6)), ncol=10,
-            dimnames=list(user=paste("u", 1:5, sep=''),
-            item=paste("i", 1:10, sep='')))
-
+data <- matrix(
+  sample(c(as.numeric(0:5), NA), 
+  100000,
+  replace=TRUE, 
+  prob=c(rep(.4/6,6),.6)), 
+  ncol=100,
+  dimnames=list(
+    user=paste("u", 1:1000, sep=''),
+    item=paste("i", 1:100, sep='')
+  )
+)
 # Real rating matrix
-r_app <- as(data, "realRatingMatrix")
+r_data <- as(data, "realRatingMatrix")
 
 
 ############################
@@ -23,7 +29,7 @@ r_app <- as(data, "realRatingMatrix")
 ############################ 
 
 # Recommender
-recom <- Recommender(r_app, method = "UBCF")
+recommender_model <- Recommender(r_data, method = "UBCF")
 
 # Save model
-save(recom, file = "model.RData")
+save(recommender_model, file = "recommender_model.RData")
