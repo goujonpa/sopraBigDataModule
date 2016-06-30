@@ -97,8 +97,12 @@ class EmployeePredictView(View):
             cmd = "R CMD BATCH ./RLib/employee_predict.R"
             subprocess.call(cmd, shell=True)
 
+            with open("./RLib/employee_predict_out.json") as f:
+                prediction = json.loads(f.read())
+
             r = JsonResponse({
                 "status": "OK",
+                "prediction": prediction
             })
         except Exception as e:
             r = JsonResponse({
