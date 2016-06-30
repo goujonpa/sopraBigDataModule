@@ -3,7 +3,6 @@ from __future__ import unicode_literals
 
 from django.db import models
 
-# Create your models here.
 
 class Employee(models.Model):
     last_name = models.CharField(max_length=100)
@@ -19,13 +18,14 @@ class Employee(models.Model):
     mail = models.EmailField()
     married = models.BooleanField()
 
+
 class Widget(models.Model):
     name = models.CharField(max_length=100)
     author = models.CharField(max_length=100)
     description = models.TextField()
 
+
 class Notation(models.Model):
     employee = models.ForeignKey('Employee')
     widget = models.ForeignKey('Widget')
     rating = models.IntegerField()
-

@@ -15,7 +15,7 @@ notations_matrix = fromJSON(file="employee_predict_in.json")
 notations_matrix = do.call(rbind, notations_matrix)
 
 # get the user matrix
-user_matrix = matrix(NA, nrow=1, ncol=dim(getModel(recom)$data)[2])
+user_matrix = matrix(NA, nrow=1, ncol=dim(getModel(recommender_model)$data)[2])
 
 
 for (i in 1:nrow(notations_matrix)) {

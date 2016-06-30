@@ -15,11 +15,12 @@ Including another URLconf
 """
 from django.conf.urls import url, include
 from django.contrib import admin
-from API.views import HWView, InitDBView, EmployeePredictView
+from API.views import HWView, InitDBView, EmployeeTrainView, EmployeePredictView
 from django.views.decorators.csrf import csrf_exempt
 
 urlpatterns = [
     url('hw/$', HWView.as_view()),
     url('idb/$', csrf_exempt(InitDBView.as_view())),
+    url('employee_train/$', EmployeeTrainView.as_view()),
     url('employee_predict/$', EmployeePredictView.as_view()),
 ]

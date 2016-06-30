@@ -1,6 +1,7 @@
 # ignore hidden
 .*
 *.RData
+*.Rout
 
 # ignore datasets
 dataset*
