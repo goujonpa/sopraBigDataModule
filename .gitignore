@@ -1,9 +1,18 @@
 # ignore hidden
 .*
+
+# R logs and data
 *.RData
 *.Rout
+
+# datasets and data
 *.json
+
+# temporary
 *.tmp
+
+# logs
+*.log
 
 # ignore datasets
 dataset*
