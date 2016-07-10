@@ -1,5 +1,9 @@
 # ignore hidden
 .*
+*.RData
+*.Rout
+*.json
+*.tmp
 
 # ignore datasets
 dataset*

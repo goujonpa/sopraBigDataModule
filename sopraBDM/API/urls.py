@@ -12,11 +12,32 @@ Class-based views
 Including another URLconf
     1. Import the include() function: from django.conf.urls import url, include
     2. Add a URL to urlpatterns:  url(r'^blog/', include('blog.urls'))
+
+
+REST or not REST ?
+- Extra action for routing on a single employee yes rest ...
+
 """
+
 from django.conf.urls import url, include
 from django.contrib import admin
-from API.views import HWView
+from API.views import HWView, EmployeeTrainView, EmployeePredictView
+from django.views.decorators.csrf import csrf_exempt
+from rest_framework import routers
+from API.viewsets import EmployeeViewSet, WidgetViewSet, NotationViewSet
+
+router = routers.DefaultRouter()
+router.register(r'employees', EmployeeViewSet)
+router.register(r'widgets', WidgetViewSet)
+router.register(r'notations', NotationViewSet)
 
 urlpatterns = [
-    url('hw/$', HWView.as_view()), 
+    url(r'', include(router.urls)),
+    url(r'hw/$', HWView.as_view()),
+    url(r'employee_train/$', EmployeeTrainView.as_view()),
+    url(r'employee_predict/$', EmployeePredictView.as_view()),
+    url(r'api-auth/', include(
+        'rest_framework.urls',
+        namespace='rest_framework'
+    ))
 ]
