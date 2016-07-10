@@ -21,7 +21,6 @@ REST or not REST ?
 
 from django.conf.urls import url, include
 from django.contrib import admin
-from API.views import HWView, EmployeeTrainView, EmployeePredictView
 from django.views.decorators.csrf import csrf_exempt
 from rest_framework import routers
 from API.viewsets import EmployeeViewSet, WidgetViewSet, NotationViewSet
@@ -33,9 +32,6 @@ router.register(r'notations', NotationViewSet)
 
 urlpatterns = [
     url(r'', include(router.urls)),
-    url(r'hw/$', HWView.as_view()),
-    url(r'employee_train/$', EmployeeTrainView.as_view()),
-    url(r'employee_predict/$', EmployeePredictView.as_view()),
     url(r'api-auth/', include(
         'rest_framework.urls',
         namespace='rest_framework'
