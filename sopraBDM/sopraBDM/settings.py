@@ -44,6 +44,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'API',
+    'djsupervisor',
+    'djcelery',
 ]
 
 MIDDLEWARE_CLASSES = [
@@ -118,6 +120,20 @@ REST_FRAMEWORK = {
             'rest_framework.permissions.AllowAny',
         )
 }
+
+# Django cache
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.db.DatabaseCache',
+        'LOCATION': 'cache_table_oklm',
+    }
+}
+
+# Celery Broker URL
+BROKER_URL = 'amqp://guest:guest@localhost:5672/'
+
+# Celery Result backend
+CELERY_RESULT_BACKEND = 'redis://:@localhost:6379/7'
 
 
 # Internationalization

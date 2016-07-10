@@ -1,3 +1,9 @@
+# ignore sockets
+*.sock
+
+# ignore pid file
+*.pid
+
 # ignore hidden
 .*
 
