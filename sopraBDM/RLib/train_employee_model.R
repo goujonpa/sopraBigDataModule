@@ -1,32 +1,32 @@
-############################
-# Libraries                #
-############################ 
+# Paul GOUJON & Alexandre LACOUR
+# UTC - TX - Sopra Steria & Big Data
+
+# LIBS
 library(recommenderlab)
 library(rjson)
 
+# DATA
+# Get the counts
+counts = fromJSON(file="./RLib/json/train_counts_in.json")
 
-############################
-# Data                     #
-############################ 
-# Generating matrix
-data <- matrix(
-  sample(
-    c(as.numeric(0:5), NA), 
-    1000000,
-    replace=TRUE,
-    prob=c(rep(.4/6,6),.6)
-  ), 
-  ncol=100,
-  dimnames=list(user=paste("u", 1:10000, sep=''), item=paste("i", 1:100, sep=''))
-)
+# instanciate a matrix
+ratings_matrix = matrix(NA, nrow=counts$employees, ncol=counts$widgets)
+
+# Get notations
+notations = fromJSON(file="./RLib/json/train_employee_widget_in.json")
+notations = do.call(rbind, notations)
+# We get the notations with the format [employee, widget, notation] for each line
+
+for (i in 1:nrow(notations)) {
+  ratings_matrix[notations[i, 1], notations[i, 2]] = notations[i, 3]
+}
 
 # Real rating matrix
-r_data <- as(data, "realRatingMatrix")
+r_data <- as(ratings_matrix, "realRatingMatrix")
 
 
-############################
-#  User Based Similarity   #
-############################ 
+# RECOMMENDER
+# We learn a User Based Recommender
 
 # Recommender
 recommender_model <- Recommender(r_data, method = "UBCF")

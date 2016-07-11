@@ -1,6 +1,10 @@
 # ignore sockets
 *.sock
 
+# ignore stdout and stderr folders (containing logs)
+stdout
+stderr
+
 # ignore pid file
 *.pid
 

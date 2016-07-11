@@ -10,7 +10,11 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/1.9/ref/settings/
 """
 
+from __future__ import absolute_import
 import os
+from kombu import Exchange, Queue
+from datetime import timedelta
+from celery.schedules import crontab
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -134,6 +138,25 @@ BROKER_URL = 'amqp://guest:guest@localhost:5672/'
 
 # Celery Result backend
 CELERY_RESULT_BACKEND = 'redis://:@localhost:6379/7'
+
+# Celery queues
+CELERY_DEFAULT_QUEUE = 'default'
+CELERY_QUEUES = (
+    Queue('default', Exchange('default'), routing_key='default'),
+    Queue('train', Exchange('train'), routing_key='train'),
+)
+
+# Celery Timezone
+CELERY_TIMEZONE = 'Europe/Amsterdam'
+
+# Celery Task Scheduler
+CELERYBEAT_SCHEDULE = {
+    # Executes everyday at 23:30
+    'RecommenderTraining': {
+        'task': 'API.tasks.TrainRecommender',
+        'schedule': crontab(hour=23, minute=30),
+    },
+}
 
 
 # Internationalization
