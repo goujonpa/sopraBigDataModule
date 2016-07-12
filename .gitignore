@@ -1,6 +1,9 @@
 # ignore sockets
 *.sock
 
+# ignore demo
+demo
+
 # ignore stdout and stderr folders (containing logs)
 stdout
 stderr

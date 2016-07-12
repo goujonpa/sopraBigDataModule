@@ -19,7 +19,8 @@ notations_matrix = do.call(rbind, notations_matrix)
 predictions_number = as.numeric(fromJSON(file="./RLib/json/predictions_number.json"))
 
 # get the user matrix
-user_matrix = matrix(NA, nrow=1, ncol=dim(getModel(recommender_model)$data)[2])
+counts = fromJSON(file="./RLib/json/train_counts_in.json")
+user_matrix = matrix(NA, nrow=1, ncol=counts$widgets)
 
 for (i in 1:nrow(notations_matrix)) {
   user_matrix[1, notations_matrix[i,2]] = notations_matrix[i,3]
