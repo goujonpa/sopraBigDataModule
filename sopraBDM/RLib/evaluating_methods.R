@@ -172,12 +172,17 @@ dev.off()
 # 1 10     100    center
 
 
-# Evaluation Cosine versus Pearson
+# List of models to evaluate
 models_to_evaluate <- list(
   UBCF_cos_30 = list(name = "UBCF", param = list(method = "cosine", nn = 30)),
   UBCF_cos_50 = list(name = "UBCF", param = list(method = "cosine", nn = 50)),
   UBCF_pear_30 = list(name = "UBCF", param = list(method = "pearson", nn = 30)),
-  UBCF_pear_50 = list(name = "UBCF", param = list(method = "pearson", nn = 50))
+  UBCF_pear_50 = list(name = "UBCF", param = list(method = "pearson", nn = 50)),
+  SVD_3 = list(name = "SVD", param = list(k = 3, maxiter = 100)),
+  SVD_10 = list(name = "SVD", param = list(k = 10, maxiter = 100)),
+  SVD_10 = list(name = "SVD", param = list(k = 10, maxiter = 300)),
+  SVD_20 = list(name = "SVD", param = list(k = 20, maxiter = 100)),
+  SVD_40 = list(name = "SVD", param = list(k = 40, maxiter = 100))
 )
 
 # Varying number of recommendation 
@@ -186,36 +191,13 @@ n_recommendations <- c(1, 3, 5, 10)
 list_results <- evaluate(x = eval_sets, method = models_to_evaluate, n = n_recommendations)
 
 # Plot ROC 
-pdf("./plots/ROC_cosinevspearson.pdf")
+pdf("./plots/ROC_modelvary.pdf")
 plot(list_results, annotate = 1, legend = "topleft") 
 title("ROC curve")
 dev.off()
 
 # Plot Precision/Recall
-pdf("./plots/PRvsRC_cosinevspearson.pdf")
+pdf("./plots/PRvsRC_modelvary.pdf")
 plot(list_results, "prec/rec", annotate = 1, legend = "bottomleft") 
 title("Precision-recall")
 dev.off()
-
-# Optimizing k
-vector_k <- c(5, 10, 30, 50)
-models_to_evaluate <- lapply(vector_k, function(k){ list(name = "UBCF", 
-                                                    param = list(method = "pearson", 
-                                                    nn = k))})
-
-names(models_to_evaluate) <- paste0("UBCF_k_", vector_k)
-
-list_results <- evaluate(x = eval_sets, method = models_to_evaluate, n = n_recommendations)
-
-# Plot ROC
-pdf("./plots/optK_ROC.pdf")
-plot(list_results, annotate = 1, legend = "topleft") 
-title("ROC curve")
-dev.off()
-
-# Plot Precision/Recall
-pdf("./plots/optK_PRvsRC.pdf")
-plot(list_results, "prec/rec", annotate = 1, legend = "bottomleft")
-title("Precision-recall")
-dev.off()
-
