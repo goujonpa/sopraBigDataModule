@@ -10,7 +10,12 @@ library(rjson)
 counts = fromJSON(file="./RLib/json/train_counts_in.json")
 
 # instanciate a matrix
-ratings_matrix = matrix(NA, nrow=counts$employees, ncol=counts$widgets)
+ratings_matrix = matrix(
+  NA, 
+  nrow=counts$employees, 
+  ncol=counts$widgets, 
+  dimnames=list(user=as.character(1:counts$employees), item=(as.character(1:counts$widgets)))
+)
 
 # Get notations
 notations = fromJSON(file="./RLib/json/train_employee_widget_in.json")
