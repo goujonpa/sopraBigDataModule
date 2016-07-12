@@ -34,7 +34,7 @@ r_data <- as(ratings_matrix, "realRatingMatrix")
 # We learn a User Based Recommender
 
 # Recommender
-recommender_model <- Recommender(r_data, method = "UBCF")
+recommender_model <- Recommender(r_data, method = "SVD")
 
 # Save model
 save(recommender_model, file = "./RLib/rdata/recommender_model.RData")

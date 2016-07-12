@@ -15,6 +15,9 @@ load("./RLib/rdata/recommender_model.RData")
 notations_matrix = fromJSON(file="./RLib/json/employee_predict_in.json")
 notations_matrix = do.call(rbind, notations_matrix)
 
+# get the asked predictions number
+predictions_number = as.numeric(fromJSON(file="./RLib/json/predictions_number.json"))
+
 # get the user matrix
 user_matrix = matrix(NA, nrow=1, ncol=dim(getModel(recommender_model)$data)[2])
 
@@ -26,7 +29,7 @@ user_rating_matrix = as(user_matrix, "realRatingMatrix")
 
 # PREDICTION using UBCF (User Based Collaborative Filtering)
 # Predictions
-user_prediction <- predict(recommender_model, user_rating_matrix, n=10)
+user_prediction <- predict(recommender_model, user_rating_matrix, n=predictions_number)
 
 # EXPORT
 

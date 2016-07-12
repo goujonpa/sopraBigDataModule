@@ -56,7 +56,15 @@ class EmployeeViewSet(viewsets.ModelViewSet):
 
         req_data = request.GET
         employee_id = pk
-        max_length = req_data['max_length']
+        try:
+            predictions_number = str(req_data['predictions_number'])
+        except Exception as e:
+            r = Response({
+                "status": "NOK",
+                "message": "Error while trying to get the expected predictions_number attribute"
+            })
+            return r
+
         notations = serializers.serialize("json", Notation.objects.filter(
             employee__id=employee_id
         ))
@@ -68,8 +76,11 @@ class EmployeeViewSet(viewsets.ModelViewSet):
                 instance['fields']['widget'],
                 instance['fields']['rating']
             ])
-        with open("./RLib/json/employee_predict_in.json", "write") as f:
+        with open("./RLib/json/employee_predict_in.json", "w") as f:
             f.write(json.dumps(l))
+
+        with open("./RLib/json/predictions_number.json", "w") as f:
+            f.write(json.dumps(predictions_number))
 
         cmd = "R CMD BATCH ./RLib/employee_predict.R ./RLib/rout/employee_predict.Rout"
         subprocess.call(cmd, shell=True)
