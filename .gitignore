@@ -1,3 +1,6 @@
+# ignore documentation build
+doc/build
+
 # ignore sockets
 *.sock
 
