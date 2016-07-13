@@ -11,6 +11,15 @@ Contents:
 .. toctree::
    :maxdepth: 2
 
+   introduction
+   apiguide
+   installation
+   functioning
+   architecture
+   toplug
+
+
+
 
 
 Indices and tables
