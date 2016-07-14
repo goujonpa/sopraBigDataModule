@@ -14,6 +14,7 @@ Contents:
    introduction
    apiguide
    installation
+   techstack
    functioning
    architecture
    toplug

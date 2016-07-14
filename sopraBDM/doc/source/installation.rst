@@ -21,7 +21,7 @@ Then, clone it into your project directory (change the username in URL):
 .. code-block:: bash
 
     mkdir project
-    git clone origin https://github.com/goujonpa/sopraBigDataModule.git
+    git clone https://github.com/goujonpa/sopraBigDataModule.git
 
 
 ======================
@@ -36,7 +36,15 @@ Project structure
 
 Once downloaded the source, you should get the following project structure:
 
-TO WRITE
+.. code-block:: python
+
+    ./  # Project root
+
+        /API            # contains all of the API logic
+        /RLib           # contains the R script and the json exchange files
+        /doc            # contains the sources of this doc
+        /sopraBDM       # contains the settings files of the project
+        /supervisord    # contains the configuration files of the supervisord
 
 
 ***********************
@@ -87,6 +95,12 @@ And deactivate by using :
 Dependencies and requirements
 =============================
 
+Now you have set up a virtual environment, you can install every python dependency by using
+
+.. code-block:: bash
+
+    pip install -r requirements.txt
+
 **************
 Database Setup
 **************
@@ -95,10 +109,46 @@ Database Setup
 PostgreSQL
 ==========
 
+We used a PostgreSQL database to develop our solution. The database settings are located in :
+
+``./sopraBDM/settings.py``
+
+You should update them to be able to connect to your database :
+
+.. code-block:: python
+
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql',
+            'NAME': 'sopraDB',
+            'HOST': '127.0.0.1',
+            'PORT': '5432',
+            'USER': 'sopra',
+            'PASSWORD': 'tx',
+        }
+    }
+
 
 ======
 Others
 ======
+
+Otherwise, you can adapt the code fairly easily following `django's documentation`_.
+
+.. _django's documentation: https://docs.djangoproject.com/en/1.9/ref/databases/
+
+=======
+Migrate
+=======
+
+To finish your database setup, you have to initialise its structure thanks to the django ORM by using :
+
+.. code-block:: bash
+
+    python manage.py makemigrations
+    python manage.py Migrate
+
+This should initialise your DB structure
 
 
 ***********
@@ -109,9 +159,9 @@ Supervisord
 What is supervisord ?
 =====================
 
-=============
-Configuration
-=============
+Supervisord (`click here to access supervisord's documentation`_) is a process manager. We use it to launch every process used by our project in just a few commands.
+
+.. _click here to access supervisord's documentation: http://supervisord.org/index.html
 
 
 ********
@@ -122,16 +172,20 @@ Starting
 Start, Stop, Restart
 ====================
 
+You should now be able to start the app by using :
 
+.. code-block:: bash
 
+    supervisord -c supervisord.conf
 
+and control it by connecting to the supervisord controller :
 
+.. code-block:: bash
 
-
-
-
-
-
-
+    supervisorctl -c supervisord.conf
+    start all
+    restart all
+    stop all
+    ...
 
 
