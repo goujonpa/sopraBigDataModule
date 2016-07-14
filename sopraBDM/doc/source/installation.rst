@@ -87,8 +87,6 @@ And deactivate by using :
 Dependencies and requirements
 =============================
 
-
-
 **************
 Database Setup
 **************
