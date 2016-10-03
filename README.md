@@ -1,6 +1,6 @@
 # sopraBigDataModule
 
-Preference Learning and Recommendation Web Service.
+Preference Learning and Recommender Web Service.
 
 ## Context
 
